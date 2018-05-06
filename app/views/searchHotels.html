@@ -14,9 +14,9 @@
 <body>
     <div id="page">
         <section class="search-form">
-            <div class="content-holder">
+            <div class="content-holder key">
                 <label for="location">Where are you going?</label>
-                <input class="search-key" type="text" name="" id="location">
+                <input class="search-key" placeholder="Enter location" type="text" name="" id="location">
             </div>
             <div class="content-holder">
                 <div class="date-holder">
@@ -30,12 +30,15 @@
                 <div class="date-holder">
                     <label for="guests">Guests</label>
                     <ul class="count-list">
-                        <li></li>
+                        <li><span class="bg-theme fg-lite"> 1 </span></li>
+                        <li><span class="fg-dark"> 2 </span></li>
+                        <li><span class="fg-dark"> 3 </span></li>
+                        <li><span class="fg-dark">3+</span></li>
                     </ul>
                 </div>
             </div>
             <div class="content-holder">
-                <a href="#" class="btn btn-prime">Search for Hotels</a>
+                <a ng-click="search()" class="btn btn-prime">Search for Hotels</a>
             </div>
         </section>
     </div>

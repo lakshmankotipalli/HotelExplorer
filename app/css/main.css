@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../fonts-and-icons/font-awesome-4.7.0/fonts/fontawesome-webfont.eot');
+    src: url('../fonts-and-icons/font-awesome-4.7.0/fonts/fontawesome-webfont.eot') format('embedded-opentype'), url('../fonts-and-icons/font-awesome-4.7.0/fonts/fontawesome-webfont.woff') format('woff'), url('../fonts-and-icons/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf') format('truetype');
+}
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -6,9 +12,34 @@ body {
   padding: 0px;
   margin: 0px;
 }
+/* bgs and colors */
 
-h1, h2, h3{ padding: 0px; margin: 0px;}
+.bg-theme {
+    background: #ED8323;
+}
 
+.fg-dark {
+    color: #000;
+}
+
+.fg-lite {
+    color: #fff;
+}
+
+/* Text */
+
+h1 { margin: 0 0 1em 0; font-size: 2.8em; font-weight: 700; }
+
+h2 { margin: 0 0 0.5em 0; font-size: 1.6em; font-weight: 700; line-height: 1.1em}
+
+h3 { margin: 0 0 0.5em 0; font-size: 1.3em; font-weight: 700;}
+
+h4 { margin: 0 0 1.5em 0; font-size: 1em; font-weight: 700;}
+
+/* ul list */
+ul { padding: 0px; }
+
+/* Input */
 input { margin: 0px; }
 
 /* Container - #page */
@@ -26,7 +57,8 @@ label {
 input {
     display: block;
     font-size: 0.9rem;
-    color: #6b5858;
+    /* color: #6b5858; */
+    color: #555;
 }
 
 .btn {
@@ -35,10 +67,17 @@ input {
     padding: 10px;
     border-radius: 3px;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .btn-prime {
     background-color: #4285f4;
+    color: #fff;
+    border-color: transparent!important;
+}
+
+.btn-action {
+    background-color: #ED8323;
     color: #fff;
     border-color: transparent!important;
 }
@@ -54,6 +93,9 @@ section.search-form, section.search-results {
     max-width: 100%;
 }
 
+.content-holder .search-key {
+    width: 70%;
+}
 
 .content-holder label, input {
     margin: 10px 0px 10px 10px;
@@ -66,7 +108,7 @@ section.search-form, section.search-results {
 
 .content-holder .date-holder {
     float: left;
-    width: 30%;
+    width: 25%;
 }
 
 .date-holder input {
@@ -77,4 +119,121 @@ section.search-form, section.search-results {
 	content: '';
 	display: block;
 	clear: both;
+}
+
+.count-list {
+    margin: 14px 0 14px 0;
+}
+
+.count-list li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.count-list li span {
+    padding: 8px;
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-color: transparent!important;
+    border-radius: 50%;
+    text-align: center;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+
+.key input[type="text"] {
+    position: relative;
+}
+.key input[type="text"]::before {
+    font-family: 'FontAwesome';
+    position: absolute;
+    content: '\f3c5';
+}
+
+/* Search Results - view */
+
+.searched {
+    border-bottom: 1px solid #ED8323;
+    box-shadow: 5px 5px #eee;
+    border-left: 1px solid #ED8323;
+    margin-bottom: 35px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-right: 1px solid #ED8323;
+    border-top: 1px solid #F8F8F8;
+}
+
+.searched .content {
+    float: left;
+    margin-left: 10px;
+}
+
+.searched .search-key {
+    width: 300px;
+}
+
+.searched::after {
+	content: '';
+	display: block;
+    clear: both;
+}
+
+.content input {
+    padding: 5px;
+    height: 25px;
+}
+
+.content label {
+    margin-left: 10px;
+}
+
+.xtra {
+    float: left;
+    margin-left: 75px;
+    margin-top: 18px;
+}
+
+/* Results article */
+.result-info {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #F8F8F8;
+}
+.result-info h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.each-result {
+    width: 100%;
+}
+
+.each-result aside img {
+    width: 300px;
+}
+
+.each-result aside {
+    width: 50%;
+    float: left;
+}
+
+.each-result aside img {
+    float: left;
+    width: 50%;
+}
+
+.each-result aside .desc {
+    float: left;
+    width: 50%;
+}
+
+.each-result {
+    content: '';
+    display: block;
+    clear: both;
 }

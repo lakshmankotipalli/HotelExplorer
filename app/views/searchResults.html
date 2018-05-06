@@ -12,55 +12,59 @@
     <div id="page">
         <section class="search-results">
             <header>
-                <section>
-                    <div class="">
-                        <label for="location"></label>
-                        <input type="text" name="location" id="">
+                <section class="searched">
+                    <div class="content">
+                        <label for="searched-location">Where</label>
+                        <input placeholder="Enter location" class="search-key" type="text" name="location" id="searched-location">
                     </div>
-                    <div class="">
-                        <div>
-                            <label for="fromDate">Check-in</label>
-                            <input type="date" name="" id="fromDate">
-                        </div>
-                        <div>
-                            <label for="toDate">Check-out</label>
-                            <input type="date" name="" id="toDate">
-                        </div>
-                        <div>
-                            <label for="guests">Guests</label>
-                            <div></div>
-                        </div>
+                    <div class="content">
+                        <label for="searched-fromDate">Check-in</label>
+                        <input type="date" name="" id="searched-fromDate">
                     </div>
-                    <a href="#" class="btn">Search for Hotels</a>
+                    <div class="content">
+                        <label for="searched-toDate">Check-out</label>
+                        <input type="date" name="" id="searched-toDate">
+                    </div>
+                    <div class="content">
+                        <label for="guests">Guests</label>
+                        <ul class="count-list">
+                            <li><span class="bg-theme fg-lite"> 1 </span></li>
+                            <li><span class="fg-dark"> 2 </span></li>
+                            <li><span class="fg-dark"> 3 </span></li>
+                            <li><span class="fg-dark">3+</span></li>
+                        </ul>
+                    </div>
+                    <div class="xtra">
+                        <a href="#" class="btn btn-action">Search for Hotels</a>
+                    </div>
                 </section>
-                </header>
-                <section>
-                    <section>
-                        <h1>180 hotels in Las Vegas, NV, USA on April 22nd - April 24th for 1 adult(s)</h1>
-                        <!--  Pagination comes here
-                        <div></div>
-                        -->
-                    </section>
-                    <section>
-                        <!-- Search results comes here -->
-                        <!-- Repeat the results with in rows with ng-repeat -->
-                        <aside>
-                            <img src="" alt="">
-                            <div class="desc">
-                                <!-- stars - icons -->
-                                <h2>Mandaring Oriental, Las Vegas</h2>
-                                <h4>some address, address, pincode</h4>
-                            </div>
-                        </aside>
-                        <aside>
-                            <span>from</span><span>$365</span><span>/night</span>
-                            <span>total: $735</span>
-                            <a href="#">Show rooms</a>
-                        </aside>
-                    </section>
-                </section>
+            </header>
+            <section class="results">
+                <article class="result-info">
+                    <h1>180 hotels in Las Vegas, NV, USA on April 22nd - April 24th for 1 adult(s)</h1>
+                    <!--  Pagination comes here
+                    <div></div>
+                    -->
+                </article>
+                <article class="each-result">
+                    <!-- Search results comes here -->
+                    <!-- Repeat the results with in rows with ng-repeat -->
+                    <aside>
+                        <img src="../assets/mandarin-las-vegas.jpeg" alt="">
+                        <div class="desc">
+                            <!-- stars - icons -->
+                            <h2>Mandarin Oriental, Las Vegas</h2>
+                            <h4>some address, address, pincode</h4>
+                        </div>
+                    </aside>
+                    <aside>
+                        <span>from</span><span>$365</span><span>/night</span>
+                        <span>total: $735</span>
+                        <a href="#" class="btn btn-action">Show rooms</a>
+                    </aside>
+                </article>
+            </section>
         </section>
-        
     </div>
 </body>
 </html>
