@@ -8,4 +8,8 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function
         $location.path('/searchResults');
     };
 
+    $scope.guestCount = function (count) {
+        $scope.guestCountNum = count;
+    };
+
 }]);

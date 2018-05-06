@@ -1,46 +1,28 @@
-<!-- <div>
-    {{msg}}
-</div> -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../fonts-and-icons/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-</head>
-<body>
-    <div id="page">
-        <section class="search-form">
-            <div class="content-holder key">
-                <label for="location">Where are you going?</label>
-                <input class="search-key" placeholder="Enter location" type="text" name="" id="location">
-            </div>
-            <div class="content-holder">
-                <div class="date-holder">
-                    <label for="fromDate">Check-in</label>
-                    <input type="date" name="" id="fromDate">
-                </div>
-                <div class="date-holder">
-                    <label for="toDate">Check-out</label>
-                    <input type="date" name="" id="toDate">
-                </div>
-                <div class="date-holder">
-                    <label for="guests">Guests</label>
-                    <ul class="count-list">
-                        <li><span class="bg-theme fg-lite"> 1 </span></li>
-                        <li><span class="fg-dark"> 2 </span></li>
-                        <li><span class="fg-dark"> 3 </span></li>
-                        <li><span class="fg-dark">3+</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-holder">
-                <a ng-click="search()" class="btn btn-prime">Search for Hotels</a>
-            </div>
-        </section>
+<section class="search-form">
+    <div class="content-holder key">
+        <label for="location">Where are you going?</label>
+        <input class="search-key" placeholder="Enter location" type="text" name="" id="location">
     </div>
-</body>
-</html>
+    <div class="content-holder">
+        <div class="date-holder">
+            <label for="fromDate">Check-in</label>
+            <input type="date" name="" id="fromDate">
+        </div>
+        <div class="date-holder">
+            <label for="toDate">Check-out</label>
+            <input type="date" name="" id="toDate">
+        </div>
+        <div class="date-holder">
+            <label for="guests">Guests</label>
+            <ul class="count-list" ng-init="guestCountNum = 1"> 
+                <li><span class="fg-dark" ng-click="guestCount(1)" ng-class="guestCountNum == 1 ? 'bg-theme' : ''" > 1 </span></li>
+                <li><span class="fg-dark" ng-click="guestCount(2)" ng-class="guestCountNum == 2 ? 'bg-theme' : ''"> 2 </span></li>
+                <li><span class="fg-dark" ng-click="guestCount(3)" ng-class="guestCountNum == 3 ? 'bg-theme' : ''"> 3 </span></li>
+                <li><span class="fg-dark" ng-click="guestCount(4)" ng-class="guestCountNum == 4 ? 'bg-theme' : ''">3+</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-holder">
+        <a ng-click="search()" class="btn btn-prime">Search for Hotels</a>
+    </div>
+</section>

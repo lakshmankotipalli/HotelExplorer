@@ -1,70 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../fonts-and-icons/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-</head>
-<body>
-    <div id="page">
-        <section class="search-results">
-            <header>
-                <section class="searched">
-                    <div class="content">
-                        <label for="searched-location">Where</label>
-                        <input placeholder="Enter location" class="search-key" type="text" name="location" id="searched-location">
+<section class="search-results">
+    <header>
+        <section class="searched">
+            <div class="content">
+                <label for="searched-location">Where</label>
+                <input placeholder="Enter location" class="search-key" type="text" name="location" id="searched-location">
+            </div>
+            <div class="content">
+                <label for="searched-fromDate">Check-in</label>
+                <input type="date" name="" id="searched-fromDate">
+            </div>
+            <div class="content">
+                <label for="searched-toDate">Check-out</label>
+                <input type="date" name="" id="searched-toDate">
+            </div>
+            <div class="content">
+                <label for="guests">Guests</label>
+                <ul class="count-list" ng-init="guestCountNum = 1"> 
+                    <li><span class="fg-dark" ng-click="guestCount(1)" ng-class="guestCountNum == 1 ? 'bg-theme' : ''" > 1 </span></li>
+                    <li><span class="fg-dark" ng-click="guestCount(2)" ng-class="guestCountNum == 2 ? 'bg-theme' : ''"> 2 </span></li>
+                    <li><span class="fg-dark" ng-click="guestCount(3)" ng-class="guestCountNum == 3 ? 'bg-theme' : ''"> 3 </span></li>
+                    <li><span class="fg-dark" ng-click="guestCount(4)" ng-class="guestCountNum == 4 ? 'bg-theme' : ''">3+</span></li>
+                </ul>
+            </div>
+            <div class="xtra">
+                <a href="#" class="btn btn-action">Search for Hotels</a>
+            </div>
+        </section>
+    </header>
+    <section class="results">
+        <article class="result-info">
+            <h1>180 hotels in Las Vegas, NV, USA on April 22nd - April 24th for 1 adult(s)</h1>
+            <!--  Pagination comes here
+            <div></div>
+            -->
+        </article>
+        <article>
+            <!-- Search results comes here -->
+            <!-- Repeat the results with in rows with ng-repeat -->
+            <section class="each-result">
+                <div class="img-container">
+                        <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+                </div>                
+                <div class="desc">
+                    <!-- stars - icons -->
+                    <h2>Mandarin Oriental, Las Vegas</h2>
+                    <h4>some address, address, pincode</h4>
+                </div>
+                <div class="details">
+                        <span>from</span><span>$365</span><span>/night</span>
+                        <span>total: $735</span>
+                        <a href="#" class="btn btn-action">Show rooms</a>
+                </div>
+                <div class="clear"></div>
+            </section>
+            <section>
+                    <div class="img-container">
+                            <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+                    </div>                
+                    <div class="desc">
+                        <!-- stars - icons -->
+                        <h2>Mandarin Oriental, Las Vegas</h2>
+                        <h4>some address, address, pincode</h4>
                     </div>
-                    <div class="content">
-                        <label for="searched-fromDate">Check-in</label>
-                        <input type="date" name="" id="searched-fromDate">
+                    <div class="details">
+                            <span>from</span><span>$365</span><span>/night</span>
+                            <span>total: $735</span>
+                            <a href="#" class="btn btn-action">Show rooms</a>
                     </div>
-                    <div class="content">
-                        <label for="searched-toDate">Check-out</label>
-                        <input type="date" name="" id="searched-toDate">
-                    </div>
-                    <div class="content">
-                        <label for="guests">Guests</label>
-                        <ul class="count-list">
-                            <li><span class="bg-theme fg-lite"> 1 </span></li>
-                            <li><span class="fg-dark"> 2 </span></li>
-                            <li><span class="fg-dark"> 3 </span></li>
-                            <li><span class="fg-dark">3+</span></li>
-                        </ul>
-                    </div>
-                    <div class="xtra">
-                        <a href="#" class="btn btn-action">Search for Hotels</a>
-                    </div>
+                    <div class="clear"></div>
                 </section>
-            </header>
-            <section class="results">
-                <article class="result-info">
-                    <h1>180 hotels in Las Vegas, NV, USA on April 22nd - April 24th for 1 adult(s)</h1>
-                    <!--  Pagination comes here
-                    <div></div>
-                    -->
-                </article>
-                <article class="each-result">
-                    <!-- Search results comes here -->
-                    <!-- Repeat the results with in rows with ng-repeat -->
-                    <aside>
-                        <img src="../assets/mandarin-las-vegas.jpeg" alt="">
+                <section>
+                        <div class="img-container">
+                                <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+                        </div>                
                         <div class="desc">
                             <!-- stars - icons -->
                             <h2>Mandarin Oriental, Las Vegas</h2>
                             <h4>some address, address, pincode</h4>
                         </div>
-                    </aside>
-                    <aside>
-                        <span>from</span><span>$365</span><span>/night</span>
-                        <span>total: $735</span>
-                        <a href="#" class="btn btn-action">Show rooms</a>
-                    </aside>
-                </article>
-            </section>
-        </section>
-    </div>
-</body>
-</html>
+                        <div class="details">
+                                <span>from</span><span>$365</span><span>/night</span>
+                                <span>total: $735</span>
+                                <a href="#" class="btn btn-action">Show rooms</a>
+                        </div>
+                        <div class="clear"></div>
+                    </section>
+                    <section>
+                            <div class="img-container">
+                                    <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+                            </div>                
+                            <div class="desc">
+                                <!-- stars - icons -->
+                                <h2>Mandarin Oriental, Las Vegas</h2>
+                                <h4>some address, address, pincode</h4>
+                            </div>
+                            <div class="details">
+                                    <span>from</span><span>$365</span><span>/night</span>
+                                    <span>total: $735</span>
+                                    <a href="#" class="btn btn-action">Show rooms</a>
+                            </div>
+                            <div class="clear"></div>
+                        </section>
+                        <section>
+                                <div class="img-container">
+                                        <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+                                </div>                
+                                <div class="desc">
+                                    <!-- stars - icons -->
+                                    <h2>Mandarin Oriental, Las Vegas</h2>
+                                    <h4>some address, address, pincode</h4>
+                                </div>
+                                <div class="details">
+                                        <span>from</span><span>$365</span><span>/night</span>
+                                        <span>total: $735</span>
+                                        <a href="#" class="btn btn-action">Show rooms</a>
+                                </div>
+                                <div class="clear"></div>
+                            </section>
+
+            
+        </article>
+        
+    </section>
+</section>
