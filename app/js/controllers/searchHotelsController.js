@@ -1,4 +1,4 @@
-hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function ($scope, $location) {
+hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifactory', function ($scope, $location, apifactory) {
     $scope.guestCount = function (count) {
         $scope.guestCountNum = count;
     };
@@ -38,15 +38,23 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function
 
         if($scope.fromDate.getDate() < 10) {
             fromDate = '0'+ $scope.fromDate.getDate();
+        } else {
+            fromDate = $scope.fromDate.getDate();
         }
         if(($scope.fromDate.getMonth()+1) < 10) {
             fromMonth = '0'+ ($scope.fromDate.getMonth()+1);
+        } else {
+            fromMonth = ($scope.fromDate.getMonth()+1);
         }
         if($scope.toDate.getDate() < 10) {
             toDate = '0'+ $scope.toDate.getDate();
+        } else {
+            toDate = $scope.toDate.getDate();
         }
         if(($scope.toDate.getMonth() + 1) < 10) {
             toMonth = '0'+ ($scope.toDate.getMonth()+1);
+        } else {
+            toMonth = ($scope.toDate.getMonth()+1);
         }
 
         $scope.from = fromMonth + '/' + fromDate + '/' + $scope.fromDate.getFullYear();
@@ -54,6 +62,35 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function
 
         var data = [$scope.selected, $scope.lat, $scope.long, $scope.from, $scope.to, $scope.guestCountNum];
         console.log(data);
+        var info = {
+            "currency": "USD",
+            "posId": "hbg3h7rf28",
+            "orderBy": "price asc, rating desc",
+            "roomOccupancies": [
+               {
+                  "occupants": [
+                     {
+                        "type": "Adult",
+                        "age": 25
+                     }
+                  ]
+               }
+            ],
+            "stayPeriod": {
+               "start": $scope.from,
+               "end": $scope.to
+            },
+               "bounds": {
+               "circle": {
+                  "center": {
+                     "lat": $scope.lat,
+                     "long": $scope.long
+                  },
+                  "radiusKm": 50.5
+               }
+            }
+         };
+        apifactory.callInit(info);
         $location.path('/searchResults');
     };
 
