@@ -1,7 +1,6 @@
-var hotelExplorerApp = angular.module('hotelExplorer', 
-["ngRoute"]);
+var hotelExplorerApp = angular.module('hotelExplorer', ["ngRoute", "ui.bootstrap"]);
 
-hotelExplorerApp.config(function ($routeProvider) {
+hotelExplorerApp.config(function ($routeProvider, $httpProvider) {
     $routeProvider
     .when("/", {
         templateUrl : "./views/searchHotels.html",

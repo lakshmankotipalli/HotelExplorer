@@ -1,5 +1,9 @@
-hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function ($scope, $location) {
-    $scope.msg = "I love Bharat";
+hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifactory', function ($scope, $location, apifactory) {
+    $scope.guestCount = function (count) {
+        $scope.guestCountNum = count;
+    };
+    // Hardcoding the Locations, these will match the original lat long values
+    $scope.locationList = ['Kakinada, Andhra Pradesh, India', 'Hyderabad, Telangana, India', 'Pune, Maharashtra, India', 'Las Vegas, NV, USA'];
     document.getElementById('fromDate').valueAsDate = new Date();
     document.getElementById('toDate').valueAsDate = new Date();
     // document.onkeydown = function(e) {
@@ -8,12 +12,86 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', function
     //     }
     // };
 
-    $scope.search = function () {
-        $location.path('/searchResults');
-    };
+    $scope.searchHotels = function () {
+        var fromDate, fromMonth, toDate, toMonth;
+        switch ($scope.selected) {
+            case $scope.locationList[0]:
+                $scope.lat = 16.989065;
+                $scope.long = 82.247467;
+            break;
+            case $scope.locationList[1]:
+                $scope.lat = 17.387140;
+                $scope.long = 78.491684;
+            break;
+            case $scope.locationList[2]:
+                $scope.lat = 18.516726;
+                $scope.long = 73.856255;
+            break;
+            case $scope.locationList[3]:
+                $scope.lat = 36.114647;
+                $scope.long = -115.172813;
+            break;
+            default:
+            $scope.lat = '';
+            $scope.long = '';
+        }
 
-    $scope.guestCount = function (count) {
-        $scope.guestCountNum = count;
+        if($scope.fromDate.getDate() < 10) {
+            fromDate = '0'+ $scope.fromDate.getDate();
+        } else {
+            fromDate = $scope.fromDate.getDate();
+        }
+        if(($scope.fromDate.getMonth()+1) < 10) {
+            fromMonth = '0'+ ($scope.fromDate.getMonth()+1);
+        } else {
+            fromMonth = ($scope.fromDate.getMonth()+1);
+        }
+        if($scope.toDate.getDate() < 10) {
+            toDate = '0'+ $scope.toDate.getDate();
+        } else {
+            toDate = $scope.toDate.getDate();
+        }
+        if(($scope.toDate.getMonth() + 1) < 10) {
+            toMonth = '0'+ ($scope.toDate.getMonth()+1);
+        } else {
+            toMonth = ($scope.toDate.getMonth()+1);
+        }
+
+        $scope.from = fromMonth + '/' + fromDate + '/' + $scope.fromDate.getFullYear();
+        $scope.to = toMonth + '/' + toDate + '/' + $scope.toDate.getFullYear();
+
+        var data = [$scope.selected, $scope.lat, $scope.long, $scope.from, $scope.to, $scope.guestCountNum];
+        console.log(data);
+        var info = {
+            "currency": "USD",
+            "posId": "hbg3h7rf28",
+            "orderBy": "price asc, rating desc",
+            "roomOccupancies": [
+               {
+                  "occupants": [
+                     {
+                        "type": "Adult",
+                        "age": 25
+                     }
+                  ]
+               }
+            ],
+            "stayPeriod": {
+               "start": $scope.from,
+               "end": $scope.to
+            },
+               "bounds": {
+               "circle": {
+                  "center": {
+                     "lat": $scope.lat,
+                     "long": $scope.long
+                  },
+                  "radiusKm": 50.5
+               }
+            }
+         };
+        apifactory.callInit(info);
+        $location.path('/searchResults');
     };
 
 }]);

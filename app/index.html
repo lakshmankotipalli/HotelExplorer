@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hotel Explorer</title>
+    <!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../fonts-and-icons/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/utils.css">
 </head>
 <body ng-app="hotelExplorer">
     <div id="page" ng-view></div>
-
+    <script src="js/libs/jquery-1.10.2.min.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
     <script src="js/libs/angular-js-1.6.9/angular.min.js"></script>
     <script src="js/libs/angular-js-1.6.9/angular-route.js"></script>
+    <script src="js/libs/angular-ui-bootstrap.js"></script>
+
     <script src="app.js"></script>
-
-
     <!-- Controllers -->
     <script src="js/controllers/searchHotelsController.js"></script>
     <script src="js/controllers/searchResultsController.js"></script>
