@@ -1,5 +1,4 @@
-var hotelExplorerApp = angular.module('hotelExplorer', 
-["ngRoute"]);
+var hotelExplorerApp = angular.module('hotelExplorer', ["ngRoute", "ui.bootstrap"]);
 
 hotelExplorerApp.config(function ($routeProvider) {
     $routeProvider

@@ -1,0 +1,13 @@
+/* Utils */
+.font-md {
+    font-size: 1.5rem;
+}
+
+.block-elem {
+    display: block;
+}
+.top-gap-sm {
+    margin-top: 10px;
+}
+
+.typeahead { z-index: 1051; }
