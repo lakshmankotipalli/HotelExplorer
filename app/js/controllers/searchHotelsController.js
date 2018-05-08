@@ -4,13 +4,6 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
     };
     // Hardcoding the Locations, these will match the original lat long values
     $scope.locationList = ['Kakinada, Andhra Pradesh, India', 'Hyderabad, Telangana, India', 'Pune, Maharashtra, India', 'Las Vegas, NV, USA'];
-    document.getElementById('fromDate').valueAsDate = new Date();
-    document.getElementById('toDate').valueAsDate = new Date();
-    // document.onkeydown = function(e) {
-    //     if(e.keyCode === 13) { // The Enter/Return key
-    //         document.activeElement.onclick(e);
-    //     }
-    // };
 
     $scope.searchHotels = function () {
         var fromDate, fromMonth, toDate, toMonth;
@@ -60,8 +53,6 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
         $scope.from = fromMonth + '/' + fromDate + '/' + $scope.fromDate.getFullYear();
         $scope.to = toMonth + '/' + toDate + '/' + $scope.toDate.getFullYear();
 
-        var data = [$scope.selected, $scope.lat, $scope.long, $scope.from, $scope.to, $scope.guestCountNum];
-        console.log(data);
         var info = {
             "currency": "USD",
             "posId": "hbg3h7rf28",
@@ -80,18 +71,41 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
                "start": $scope.from,
                "end": $scope.to
             },
-               "bounds": {
+            "bounds": {
                "circle": {
                   "center": {
                      "lat": $scope.lat,
                      "long": $scope.long
-                  },
-                  "radiusKm": 50.5
+                },
+                "radiusKm": 50.5
                }
             }
          };
-        apifactory.callInit(info);
-        $location.path('/searchResults');
+        apifactory.callInit(info).then(function(resp) {
+            console.log('ctrl resp', resp.data.sessionId);
+            $scope.sessionId = resp.data.sessionId;
+            $scope.statusReq();
+        }, function (err) {
+            if(err.data.code == '55') {
+                alert(err.data.info[0].message);
+            } else {
+                alert(err.data.message);
+            }
+        });
+
+        $scope.statusReq = function () {
+            var obj = {sessionId: $scope.sessionId};
+            //apifactory.setSessionId(obj);
+            apifactory.callStatus(obj).then(function (res) {
+                console.log(res);
+                if(res.status == 200 && res.statusText == 'OK') {
+                    $location.path('/searchResults');
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+        
     };
 
 }]);
