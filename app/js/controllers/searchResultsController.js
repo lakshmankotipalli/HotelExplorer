@@ -158,7 +158,6 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
     $scope.resultSuccess = function (res) {
         if(res.status == 200 && res.statusText == 'OK') {
             angular.element('#loader').fadeOut();
-            console.log(res.data);
             $scope.hotels = res.data.hotels;
         }
     };
@@ -171,8 +170,7 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
             type: 'error',
             title: 'Oops...',
             text: err.data.message
-          })
-        //alert(err.data.message);
+          });
         console.log(err);
     };
 

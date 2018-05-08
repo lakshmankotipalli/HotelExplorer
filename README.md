@@ -9,6 +9,8 @@
 
 * RWD done for first view
 
-* For Hotel search, search with Mumbai as location, as I have hard-coded the lat and long same as from API Request Body. Other drop-down options are not active now.
+* API End points integrated with the Front End
+
+* For Hotel search, search with 'Mumbai' as location, as I have hard-coded the lat and long as same as from API Request Body. Other drop-down options are not giving results as we don't have the genuine lat and long for locations working
 
 * After the search, the search result is shown in the next view
