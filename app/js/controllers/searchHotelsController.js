@@ -82,15 +82,13 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
                     type: 'error',
                     title: 'Oops...',
                     text: err.data.info[0].message
-                  })
-                //alert(err.data.info[0].message);
+                  });
             } else {
                 swal({
                     type: 'error',
                     title: 'Oops...',
                     text: err.data.message
-                  })
-                //alert(err.data.message);
+                  });
             }
         };
         apifactory.apiRequest(info, 'INIT', $scope.successCall, $scope.failureCall);
