@@ -78,9 +78,19 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
 
         $scope.failureCall = function (err) {
             if(err.data.code == '55') {
-                alert(err.data.info[0].message);
+                swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: err.data.info[0].message
+                  })
+                //alert(err.data.info[0].message);
             } else {
-                alert(err.data.message);
+                swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: err.data.message
+                  })
+                //alert(err.data.message);
             }
         };
         apifactory.apiRequest(info, 'INIT', $scope.successCall, $scope.failureCall);
@@ -149,7 +159,13 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
 
     $scope.resultFailure = function (err) {
         angular.element('#loader').fadeOut();
-        alert(err.data.message);
+        //Swal(err.data.message);
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: err.data.message
+          })
+        //alert(err.data.message);
         $scope.noResults = true;
         console.log(err);
     };
