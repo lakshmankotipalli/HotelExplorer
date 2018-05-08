@@ -7,7 +7,7 @@
 * Angular Features used : Controllers, Service.
 (Tried using AngularJS Component, development for the same is still in progress)
 
-* RWD done
+* RWD done for first view
 
 * For Hotel search, search with Mumbai as location, as I have hard-coded the lat and long same as from API Request Body. Other drop-down options are not active now.
 
