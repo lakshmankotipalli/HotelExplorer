@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="../fonts-and-icons/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/utils.css">
+    <link rel="stylesheet" href="../css/media.css">
 </head>
 <body ng-app="hotelExplorer">
+    <div id="loader" class="spinner"></div>
     <div id="page" ng-view></div>
     <script src="js/libs/jquery-1.10.2.min.js"></script>
     <script src="js/libs/bootstrap.min.js"></script>
@@ -25,5 +27,8 @@
 
     <!-- Services -->
     <script src="js/services/services.js"></script>
+
+    <!-- Components -->
+    <script src="js/components/searchComponent.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-<header class="fg-theme site-head"><h1>Hotel Explorer</h1></header>
 <section class="search-form">
     <form name="searchHotelsForm" action="">
         <div class="content-container">
@@ -6,8 +5,8 @@
                 <label for="location">Where are you going?</label>
                 <select required ng-model="selected" class="search-key form-control" ng-options="opt as opt.city for opt in locationList">
                     <option value="">---Please select---</option>
-                </select>
-                <!-- <input class="search-key form-control" required ng-model="selected" placeholder="Enter location" type="text" id="location"> -->
+                </select>               
+                    <!-- <input class="search-key form-control" required ng-model="selected" placeholder="Enter location" type="text" id="location"> -->
             </div>
             <div class="content-holder">
                 <div class="date-holder">
@@ -32,6 +31,5 @@
                 <button type="submit" tabindex="0" ng-click="searchHotelsForm.$valid && searchHotels()" class="btn btn-prime">Search for Hotels</button>
             </div>
         </div>
-        
     </form>
 </section>

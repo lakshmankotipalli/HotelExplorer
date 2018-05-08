@@ -1,74 +1,51 @@
-hotelExplorerApp.service('apifactory',['$http', '$q', function ($http, $q) {
-    var baseURL = 'https://public-be.oski.io/hotel/v1.0/search',
-    initURL = '/init',
-    statusURL = '/status',
-    resultsURL = '/results';
-
+hotelExplorerApp.service('apifactory',['$http', function ($http) {
+    var baseURL = 'https://public-be.oski.io/hotel/v1.0/search';
+    var serviceEndPoints = {
+        INIT: '/init',
+        STATUS: '/status',
+        RESULTS: '/results'
+    }
     var headers = {
         'oski-tenantId': 'Demo',
         'Content-Type': 'application/json'
     }
-    var def = $q.defer();
     var sessionId = {};
+    var searchData = {};
+    var hotels = [];
 
-    
-    return {
-        callInit: function (data) {
-            $http({
-                method: 'POST',
-                url: baseURL+initURL,
-                data: data,
-                headers: headers
-            }).then(function (resp) {
-                console.log(resp);
-                def.resolve(resp);
-            }).catch(function (err) {
-                console.log(err);
-                def.reject(err);
-            }).finally(function() {
-                console.log("finally finished");
-              });
-            return def.promise;
-        },
-        callStatus: function (data) {
-            $http({
-                method: 'POST',
-                url: baseURL+statusURL,
-                data: data,
-                headers: headers
-            }).then(function (resp) {
-                console.log(resp);
-                def.resolve(resp);
-            }).catch(function (err) {
-                console.log(err);
-                def.reject(err);
-            }).finally(function() {
-                console.log("finally finished");
-              });
-            return def.promise;
-        },
-        callResults: function (data) {
-            $http({
-                method: 'POST',
-                url: baseURL+resultsURL,
-                data: data,
-                headers: headers
-            }).then(function (resp) {
-                console.log(resp);
-                def.resolve(resp);
-            }).catch(function (err) {
-                console.log(err);
-                def.reject(err);
-            }).finally(function() {
-                console.log("finally finished");
-              });
-            return def.promise;
-        },
-        setSessionId: function (data) {
-            sessionId = data;
-        },
-        getSessionId: function () {
-            return sessionId;
-        }
+    this.setHotels = function(data){
+        hotels = data;
     };
+
+    this.getHotels = function(){
+        return hotels;
+    };
+    
+    this.apiRequest = function (data, url, success, failure) {
+        $http({
+            method: 'POST',
+            url: baseURL+serviceEndPoints[url],
+            data: data,
+            headers: headers
+        }).then(function (resp) {
+            success(resp);
+        }).catch(function (err) {
+            failure(err);
+        });
+    };
+
+    this.setSessionId = function (id) {
+        sessionId = id;
+    };
+
+    this.getSessionId = function () {
+        return sessionId;
+    };
+
+    this.setSearchData = function (data) {
+        searchData = data;
+    };
+    this.getSearchData = function () {
+        return searchData;
+    }
 }]);

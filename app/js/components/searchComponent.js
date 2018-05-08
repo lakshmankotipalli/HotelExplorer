@@ -1,67 +1,33 @@
-hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', function ($scope, apifactory) {
+hotelExplorerApp.component('searchComponent', {
+    bindings: {
+        select: '=',
+        currLocation:'='
+    },
+    templateUrl: '../views/searchTemplate.html',
+    controller: 'searchFunctionController'
+});
+hotelExplorerApp.controller('searchFunctionController', function ($scope, $location, apifactory) {
+
+    // Hardcoding the Locations, these will match the original lat long values
+   
+    
+
+    $scope.searchInfo = apifactory.getSearchData();    
+    $scope.locationList = $scope.searchInfo.locationList;
+    $scope.selected = $scope.searchInfo.location;
+    $scope.fromDate = $scope.searchInfo.from;
+    $scope.toDate = $scope.searchInfo.to;
+    $scope.hotels = apifactory.getHotels() || [];
     $scope.guestCount = function (count) {
         $scope.guestCountNum = count;
     };
-
-    $scope.locationList = [{city: 'Mumbai', lat: 49.0097, lng: 2.5479}, 
-    {city: 'Kakinada, Andhra Pradesh, India', lat: 16.989065, lng: 82.247467}, 
-    {city: 'Hyderabad, Telangana, India', lat: 17.387140, lng: 78.491684}, 
-    {city: 'Pune, Maharashtra, India', lat: 18.516726, lng: 73.856255}, 
-    {city: 'Las Vegas, NV, USA', lat: 36.114647, lng: -115.172813}];
-
-    $scope.init = function () {
-        $scope.hotels = [];
-        $scope.noResults = false;
-        $scope.currLocation='SearchResults';
-        $scope.searchInfo = apifactory.getSearchData();    
-        $scope.locationList = $scope.searchInfo.locationList;
-        $scope.selected = $scope.searchInfo.location;
-        $scope.fromDate = $scope.searchInfo.from;
-        $scope.toDate = $scope.searchInfo.to;
-        console.log($scope.fromDate, $scope.toDate);
-        $scope.hotels = apifactory.getHotels() || [];
-
-
-        console.log($scope.searchInfo);
-        var obj = {
-            "sessionId": apifactory.getSessionId().sessionId,
-            "paging": {
-               "pageNo": 1,
-               "pageSize": 1,
-               "orderBy": "price asc, rating desc"
-            },
-            "optionalDataPrefs": [
-               "All"
-            ],
-            "currency": "USD",
-            "contentPrefs": [
-               "Basic",
-               "Activities",
-               "Amenities",
-               "Policies",
-               "AreaAttractions",
-               "Descriptions",
-               "Images",
-               "CheckinCheckoutPolicy",
-               "All"
-            ],
-            "filters": {
-               "minHotelPrice": 1,
-               "maxHotelPrice": 10000,
-               "minHotelRating": 1,
-               "maxHotelRating": 5,
-               "hotelChains": [
-                  "Novotel",
-                  "Marriott",
-                  "Hilton",
-                  "Accor"
-               ],
-               "allowedCountry": "FR"
-            }
-         };
-
-        apifactory.apiRequest(obj, 'RESULTS', $scope.resultSuccess, $scope.resultFailure);
-    };
+    if(!$scope.searchInfo.locationList || !$scope.searchInfo.locationList.length){
+        $scope.locationList = [{city: 'Mumbai', lat: 49.0097, lng: 2.5479}, 
+        {city: 'Kakinada, Andhra Pradesh, India', lat: 16.989065, lng: 82.247467}, 
+        {city: 'Hyderabad, Telangana, India', lat: 17.387140, lng: 78.491684}, 
+        {city: 'Pune, Maharashtra, India', lat: 18.516726, lng: 73.856255}, 
+        {city: 'Las Vegas, NV, USA', lat: 36.114647, lng: -115.172813}];
+    }
 
 
     $scope.searchHotels = function () {
@@ -120,10 +86,8 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
             }
          };
 
-         console.log($scope.from);
-         $scope.getMonthandDate($scope.from, $scope.to);
-        //  $scope.searchData = {locationList:$scope.locationList,location: $scope.selected, from: $scope.fromDate, to: $scope.toDate};
-        //  apifactory.setSearchData($scope.searchData);
+         $scope.searchData = {locationList:$scope.locationList,location: $scope.selected, from: $scope.fromDate, to: $scope.toDate};
+         apifactory.setSearchData($scope.searchData);
          $scope.successCall = function (result) {
             $scope.sessionId = result.data.sessionId;
             $scope.statusReq();
@@ -140,32 +104,30 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
         
     };
 
-    $scope.getMonthandDate = function (from, to) {
-        var theDate = from.split('/')
-        console.log(theDate);
-    };
-
     $scope.resultSuccess = function (res) {
         if(res.status == 200 && res.statusText == 'OK') {
             angular.element('#loader').fadeOut();
             console.log(res.data);
-            $scope.hotels = res.data.hotels;
+         if($scope.currLocation =='SearchResults'){
+            $scope.hotels = res.data.hotels;           
+         }else{
+            apifactory.setHotels(res.data.hotels);
+            $location.path('/searchResults');
+         }
         }
     };
 
     $scope.resultFailure = function (err) {
         angular.element('#loader').fadeOut();
-        $scope.hotels = [];
-        $scope.noResults = true;
-        alert(err.data.message);
+       // alert(err.data.message);
+        $scope.noResults = true;                
         console.log(err);
     };
-
-
 
     $scope.statusSuccess = function (result) {
         console.log(result);
         if(result.status == 200 && result.statusText == 'OK') {
+            //$location.path('/searchResults');
             var obj = {
                 "sessionId": apifactory.getSessionId().sessionId,
                 "paging": {
@@ -202,7 +164,10 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
                    "allowedCountry": "FR"
                 }
              };
+    
             apifactory.apiRequest(obj, 'RESULTS', $scope.resultSuccess, $scope.resultFailure);
+
+
         }
     };
 
@@ -211,11 +176,11 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
         console.log(err);
     };
 
+    
+
     $scope.statusReq = function () {
         var obj = {sessionId: $scope.sessionId};
         apifactory.setSessionId(obj);
         apifactory.apiRequest(obj, 'STATUS', $scope.statusSuccess, $scope.statusFailure);
     };
-
-    $scope.init();
-}]);
+});
