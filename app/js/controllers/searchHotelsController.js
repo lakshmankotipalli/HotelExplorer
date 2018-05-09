@@ -1,41 +1,19 @@
-hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifactory', function ($scope, $location, apifactory) {
+hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifactory', '$rootScope', function ($scope, $location, apifactory, $rootScope) {
     $scope.guestCount = function (count) {
         $scope.guestCountNum = count;
     };
     // Hardcoding the Locations, these will match the original lat long values
-    $scope.locationList = ['Kakinada, Andhra Pradesh, India', 'Hyderabad, Telangana, India', 'Pune, Maharashtra, India', 'Las Vegas, NV, USA'];
-    document.getElementById('fromDate').valueAsDate = new Date();
-    document.getElementById('toDate').valueAsDate = new Date();
-    // document.onkeydown = function(e) {
-    //     if(e.keyCode === 13) { // The Enter/Return key
-    //         document.activeElement.onclick(e);
-    //     }
-    // };
+    $scope.locationList = [{city: 'Mumbai', lat: 49.0097, lng: 2.5479}, 
+    {city: 'Kakinada, Andhra Pradesh, India', lat: 16.989065, lng: 82.247467}, 
+    {city: 'Hyderabad, Telangana, India', lat: 17.387140, lng: 78.491684}, 
+    {city: 'Pune, Maharashtra, India', lat: 18.516726, lng: 73.856255}, 
+    {city: 'Las Vegas, NV, USA', lat: 36.114647, lng: -115.172813}];
+    $scope.currLocation='SearchInit';
+
 
     $scope.searchHotels = function () {
+        angular.element('#loader').show();
         var fromDate, fromMonth, toDate, toMonth;
-        switch ($scope.selected) {
-            case $scope.locationList[0]:
-                $scope.lat = 16.989065;
-                $scope.long = 82.247467;
-            break;
-            case $scope.locationList[1]:
-                $scope.lat = 17.387140;
-                $scope.long = 78.491684;
-            break;
-            case $scope.locationList[2]:
-                $scope.lat = 18.516726;
-                $scope.long = 73.856255;
-            break;
-            case $scope.locationList[3]:
-                $scope.lat = 36.114647;
-                $scope.long = -115.172813;
-            break;
-            default:
-            $scope.lat = '';
-            $scope.long = '';
-        }
-
         if($scope.fromDate.getDate() < 10) {
             fromDate = '0'+ $scope.fromDate.getDate();
         } else {
@@ -60,38 +38,76 @@ hotelExplorerApp.controller('searchHotelsCtrl', ['$scope', '$location', 'apifact
         $scope.from = fromMonth + '/' + fromDate + '/' + $scope.fromDate.getFullYear();
         $scope.to = toMonth + '/' + toDate + '/' + $scope.toDate.getFullYear();
 
-        var data = [$scope.selected, $scope.lat, $scope.long, $scope.from, $scope.to, $scope.guestCountNum];
-        console.log(data);
-        var info = {
-            "currency": "USD",
-            "posId": "hbg3h7rf28",
-            "orderBy": "price asc, rating desc",
-            "roomOccupancies": [
-               {
-                  "occupants": [
-                     {
-                        "type": "Adult",
-                        "age": 25
-                     }
-                  ]
-               }
-            ],
-            "stayPeriod": {
-               "start": $scope.from,
-               "end": $scope.to
-            },
-               "bounds": {
-               "circle": {
-                  "center": {
-                     "lat": $scope.lat,
-                     "long": $scope.long
-                  },
-                  "radiusKm": 50.5
-               }
+        var infoObj = {location: $scope.selected, from: $scope.from, to: $scope.to};
+
+         $scope.searchData = {locationList:$scope.locationList,location: $scope.selected, from: $scope.fromDate, to: $scope.toDate};
+         apifactory.setSearchData($scope.searchData);
+         $scope.successCall = function (result) {
+            $scope.sessionId = result.data.sessionId;
+            $scope.statusReq();
+        };
+
+        $scope.failureCall = function (err) {
+            if(err.data.code == '55') {
+                swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: err.data.info[0].message
+                  });
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: err.data.message
+                  });
             }
-         };
-        apifactory.callInit(info);
-        $location.path('/searchResults');
+        };
+        apifactory.apiRequest(infoObj, 'INIT', $scope.successCall, $scope.failureCall);
+    };
+
+    
+    $scope.statusSuccess = function (result) {
+        console.log(result);
+        if(result.status == 200 && result.statusText == 'OK') {
+            //$location.path('/searchResults');
+            var obj = {
+                sessionId: apifactory.getSessionId().sessionId
+            }
+    
+            apifactory.apiRequest(obj, 'RESULTS', $scope.resultSuccess, $scope.resultFailure);
+
+
+        }
+    };
+
+    $scope.statusFailure = function (err) {
+        angular.element('#loader').fadeOut();
+        console.log(err);
+    };
+
+    $scope.resultSuccess = function (res) {
+        if(res.status == 200 && res.statusText == 'OK') {
+            angular.element('#loader').fadeOut();
+            console.log(res.data);
+            $location.path('/searchResults');
+        }
+    };
+
+    $scope.resultFailure = function (err) {
+        angular.element('#loader').fadeOut();
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: err.data.message
+          });
+        $scope.noResults = true;
+        console.log(err);
+    };
+
+    $scope.statusReq = function () {
+        var obj = {"sessionId": $scope.sessionId};
+        apifactory.setSessionId(obj);
+        apifactory.apiRequest(obj, 'STATUS', $scope.statusSuccess, $scope.statusFailure);
     };
 
 }]);

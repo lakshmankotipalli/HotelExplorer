@@ -1,0 +1,43 @@
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+   .content-container{
+       width:auto;
+   }
+   .content-holder .date-holder{
+    width:30%;
+}
+
+.content-holder .date-holder.guest{
+    width:40%;
+}
+}
+@media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+    .content-holder .date-holder{
+        width:50%;
+    }
+ 
+    .content-holder .date-holder.guest{
+        width:100%;
+    }
+    .content-holder .date-holder input{
+        width:80%;
+        padding:10px 0;
+    }
+}
+@media only screen and (max-width: 320px) {
+    /* For mobile phones: */
+    .content-holder .date-holder{
+        width:auto;
+        float:none;
+    }
+
+    .content-holder .date-holder input{
+        width:100%;
+        padding:10px 0;
+    }
+ 
+    .content-holder .date-holder.guest{
+        width:100%;
+    }
+}

@@ -10,4 +10,22 @@
     margin-top: 10px;
 }
 
+.top-gap-md {
+	margin-top: 35px;
+}
+
 .typeahead { z-index: 1051; }
+
+.spinner {
+	background: url(../assets/Rekyc_loader.gif) no-repeat transparent;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999999;
+	display: none;
+}
