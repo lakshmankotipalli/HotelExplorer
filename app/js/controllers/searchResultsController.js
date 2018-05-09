@@ -21,43 +21,15 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
         console.log($scope.fromDate, $scope.toDate);
         $scope.hotels = apifactory.getHotels() || [];
 
+        $scope.fromMonthName = apifactory.getMonthName($scope.fromDate.getMonth()+1);
+        $scope.toMonthName = apifactory.getMonthName($scope.toDate.getMonth()+1);
+
+        $scope.fromDateSuffix = apifactory.appendDateSuffix($scope.fromDate.getDate());
+        $scope.toDateSuffix = apifactory.appendDateSuffix($scope.toDate.getDate());
 
         console.log($scope.searchInfo);
         var obj = {
-            "sessionId": apifactory.getSessionId().sessionId,
-            "paging": {
-               "pageNo": 1,
-               "pageSize": 1,
-               "orderBy": "price asc, rating desc"
-            },
-            "optionalDataPrefs": [
-               "All"
-            ],
-            "currency": "USD",
-            "contentPrefs": [
-               "Basic",
-               "Activities",
-               "Amenities",
-               "Policies",
-               "AreaAttractions",
-               "Descriptions",
-               "Images",
-               "CheckinCheckoutPolicy",
-               "All"
-            ],
-            "filters": {
-               "minHotelPrice": 1,
-               "maxHotelPrice": 10000,
-               "minHotelRating": 1,
-               "maxHotelRating": 5,
-               "hotelChains": [
-                  "Novotel",
-                  "Marriott",
-                  "Hilton",
-                  "Accor"
-               ],
-               "allowedCountry": "FR"
-            }
+            sessionId: apifactory.getSessionId().sessionId
          };
 
         apifactory.apiRequest(obj, 'RESULTS', $scope.resultSuccess, $scope.resultFailure);
@@ -91,37 +63,9 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
         $scope.from = fromMonth + '/' + fromDate + '/' + $scope.fromDate.getFullYear();
         $scope.to = toMonth + '/' + toDate + '/' + $scope.toDate.getFullYear();
 
-        var info = {
-            "currency": "USD",
-            "posId": "hbg3h7rf28",
-            "orderBy": "price asc, rating desc",
-            "roomOccupancies": [
-               {
-                  "occupants": [
-                     {
-                        "type": "Adult",
-                        "age": 25
-                     }
-                  ]
-               }
-            ],
-            "stayPeriod": {
-               "start": $scope.from,
-               "end": $scope.to
-            },
-            "bounds": {
-               "circle": {
-                  "center": {
-                     "lat": $scope.selected.lat,
-                     "long": $scope.selected.lng
-                },
-                "radiusKm": 50.5
-               }
-            }
-         };
+        var infoObj = {location: $scope.selected, from: $scope.from, to: $scope.to};
 
          console.log($scope.from);
-         $scope.getMonthandDate($scope.from, $scope.to);
         //  $scope.searchData = {locationList:$scope.locationList,location: $scope.selected, from: $scope.fromDate, to: $scope.toDate};
         //  apifactory.setSearchData($scope.searchData);
          $scope.successCall = function (result) {
@@ -135,30 +79,27 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
                     type: 'error',
                     title: 'Oops...',
                     text: err.data.info[0].message
-                  })
-                //alert(err.data.info[0].message);
+                  });
             } else {
                 swal({
                     type: 'error',
                     title: 'Oops...',
                     text: err.data.message
-                  })
-                //alert(err.data.message);
+                  });
             }
         };
-        apifactory.apiRequest(info, 'INIT', $scope.successCall, $scope.failureCall);
+        apifactory.apiRequest(infoObj, 'INIT', $scope.successCall, $scope.failureCall);
         
-    };
-
-    $scope.getMonthandDate = function (from, to) {
-        var theDate = from.split('/')
-        console.log(theDate);
     };
 
     $scope.resultSuccess = function (res) {
         if(res.status == 200 && res.statusText == 'OK') {
             angular.element('#loader').fadeOut();
+            console.log(res.data);
             $scope.hotels = res.data.hotels;
+            if($scope.hotels.length > 0) {
+                $scope.noResults = false;
+            }
         }
     };
 
@@ -180,40 +121,7 @@ hotelExplorerApp.controller('searchResultsCtrl', ['$scope', 'apifactory', functi
         console.log(result);
         if(result.status == 200 && result.statusText == 'OK') {
             var obj = {
-                "sessionId": apifactory.getSessionId().sessionId,
-                "paging": {
-                   "pageNo": 1,
-                   "pageSize": 1,
-                   "orderBy": "price asc, rating desc"
-                },
-                "optionalDataPrefs": [
-                   "All"
-                ],
-                "currency": "USD",
-                "contentPrefs": [
-                   "Basic",
-                   "Activities",
-                   "Amenities",
-                   "Policies",
-                   "AreaAttractions",
-                   "Descriptions",
-                   "Images",
-                   "CheckinCheckoutPolicy",
-                   "All"
-                ],
-                "filters": {
-                   "minHotelPrice": 1,
-                   "maxHotelPrice": 10000,
-                   "minHotelRating": 1,
-                   "maxHotelRating": 5,
-                   "hotelChains": [
-                      "Novotel",
-                      "Marriott",
-                      "Hilton",
-                      "Accor"
-                   ],
-                   "allowedCountry": "FR"
-                }
+                sessionId: apifactory.getSessionId().sessionId
              };
             apifactory.apiRequest(obj, 'RESULTS', $scope.resultSuccess, $scope.resultFailure);
         }

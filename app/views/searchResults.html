@@ -1,65 +1,63 @@
-<header class="fg-theme site-head"><h1>Hotel Explorer</h1></header>
-<section class="search-results">
-    <header>
-        <form name="searchHotelsForm" action="">
-            <div class="content-container results">
-                <div class="content-holder">
-                    <label for="location">Where are you going?</label>
-                    <select required ng-model="selected" class="search-key form-control" ng-options="opt as opt.city for opt in locationList">
-                        <option value="">---Please select---</option>
-                    </select>
-                    <!-- <input class="search-key form-control" required ng-model="selected" placeholder="Enter location" type="text" id="location"> -->
+<header role="banner" class="fg-theme site-head"><h1>Hotel Explorer</h1></header>
+<section role="application" class="search-results">
+    <form role="form" name="searchHotelsForm">
+        <div class="content-container results">
+            <div class="content-holder">
+                <label role="label" for="location">Where ?</label>
+                <select role="list" aria-label="Select Location" aria-required="true" required ng-model="selected" class="search-key form-control" ng-options="opt as opt.city for opt in locationList">
+                    <option value="">---Please select---</option>
+                </select>
+                <!-- <input class="search-key form-control" required ng-model="selected" placeholder="Enter location" type="text" id="location"> -->
+            </div>
+            <div class="content-holder">
+                <div class="date-holder">
+                    <label for="fromDate">Check-in</label>
+                    <input role="input" type="date" aria-required="true" ng-model="fromDate" class="form-control" required name="" id="fromDate">
                 </div>
-                <div class="content-holder">
-                    <div class="date-holder">
-                        <label for="fromDate">Check-in</label>
-                        <input type="date" ng-model="fromDate" class="form-control" required name="" id="fromDate">
-                    </div>
-                    <div class="date-holder">
-                        <label for="toDate">Check-out</label>
-                        <input type="date" ng-model="toDate" class="form-control" required name="" id="toDate">
-                    </div>
-                    <div class="date-holder guest">
-                        <label for="guests">Guests</label>
-                        <ul class="count-list" ng-init="guestCountNum = 1"> 
-                            <li tabindex="0"><span class="fg-dark" ng-click="guestCount(1)" ng-class="guestCountNum == 1 ? 'bg-theme' : ''" > 1 </span></li>
-                            <li tabindex="1"><span class="fg-dark" ng-click="guestCount(2)" ng-class="guestCountNum == 2 ? 'bg-theme' : ''"> 2 </span></li>
-                            <li tabindex="2"><span class="fg-dark" ng-click="guestCount(3)" ng-class="guestCountNum == 3 ? 'bg-theme' : ''"> 3 </span></li>
-                            <li tabindex="3"><span class="fg-dark" ng-click="guestCount('3+')" ng-class="guestCountNum == '3+' ? 'bg-theme' : ''">3+</span></li>
-                        </ul>
-                    </div>
+                <div class="date-holder">
+                    <label for="toDate">Check-out</label>
+                    <input role="input" type="date" aria-required="true" ng-model="toDate" class="form-control" required name="" id="toDate">
                 </div>
-                <div class="content-holder">
-                    <button type="submit" tabindex="0" ng-click="searchHotelsForm.$valid && searchHotels()" class="btn btn-action top-gap-md">Search for Hotels</button>
+                <div class="date-holder guest">
+                    <label for="guests">Guests</label>
+                    <ul role="listbox" class="count-list" ng-init="guestCountNum = 1"> 
+                        <li role="listitem" tabindex="0"><span class="fg-dark" ng-click="guestCount(1)" ng-class="guestCountNum == 1 ? 'bg-theme' : ''" > 1 </span></li>
+                        <li role="listitem" tabindex="0"><span class="fg-dark" ng-click="guestCount(2)" ng-class="guestCountNum == 2 ? 'bg-theme' : ''"> 2 </span></li>
+                        <li role="listitem" tabindex="0"><span class="fg-dark" ng-click="guestCount(3)" ng-class="guestCountNum == 3 ? 'bg-theme' : ''"> 3 </span></li>
+                        <li role="listitem" tabindex="0"><span class="fg-dark" ng-click="guestCount('3+')" ng-class="guestCountNum == '3+' ? 'bg-theme' : ''">3+</span></li>
+                    </ul>
                 </div>
             </div>
-        </form>
-    </header>
-    <section class="results">
-        <article class="result-info">
-            <h1 ng-if="hotels.length">{{hotels.length}} hotel(s) in {{hotels[0].contact.address.city.name}} on April 22nd - April 24th for {{hotels[0].roomOccupancies[0].adultCount}} adult(s)</h1>
-            <h1 ng-if="!hotels.length || noResults==true">No Hotels found for the Search Criteria</h1>
+            <div class="content-holder">
+                <button role="button" type="submit" tabindex="0" ng-click="searchHotelsForm.$valid && searchHotels()" class="btn btn-action top-gap-md">Search for Hotels</button>
+            </div>
+        </div>
+    </form>
+    <section role="main" class="results">
+        <article role="article" class="result-info">
+            <h1 role="status" ng-if="hotels.length">{{hotels.length}} hotel(s) in {{hotels[0].contact.address.city.name}} on {{fromMonthName}} {{fromDateSuffix}} - {{toMonthName}} {{toDateSuffix}} for {{hotels[0].roomOccupancies[0].adultCount}} adult(s)</h1>
+            <h1 role="status" ng-if="hotels.length == 0 && noResults==true">No Hotels found for the Search Criteria</h1>
             <!--  Pagination comes here
             <div></div>
             -->
         </article>
-        <article>
+        <article role="article">
             <!-- Search results comes here -->
             <!-- Repeat the results with in rows with ng-repeat -->
-            <section ng-if="hotels.length" class="each-result" ng-repeat="hotel in hotels">
-                <div class="img-container">
-                        <img src="../assets/mandarin-las-vegas.jpeg" alt="">   
+            <section role="grid" ng-if="hotels.length" class="each-result" ng-repeat="hotel in hotels">
+                <div role="gridcell" class="img-container">
+                        <img role="figure" src="../assets/mandarin-las-vegas.jpeg" alt="">   
                 </div>                
-                <div class="desc">
+                <div role="gridcell" class="desc">
                     <!-- stars - icons -->
                     <h2>{{hotel.name}}</h2>
                     <h3><i class="fa fa-map-marker"></i>&nbsp;{{hotel.contact.address.line1}}, {{hotel.contact.address.line2}}, {{hotel.contact.address.postalCode}}, {{hotel.contact.address.countryCode}}</h3>
                 </div>
-                <div class="details">
+                <div role="gridcell" class="details">
                     <span class="block-elem font-sm-lite">from</span>
                     <span class="font-md">$365</span><span class="font-sm-lite">/night</span>
                     <span class="block-elem font-sm-lite top-gap-sm">Total: $735</span>
-                    <a href="#" class="btn btn-action btn-block">Show rooms</a>
+                    <a role="button" href="#" class="btn btn-action btn-block">Show rooms</a>
                 </div>
                 <div class="clear"></div>
             </section>
