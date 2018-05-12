@@ -16,4 +16,4 @@
 
 * After the search, the search result is shown in the next view
 
-* Used ARIA attributes
+* Used basic ARIA roles & attributes
