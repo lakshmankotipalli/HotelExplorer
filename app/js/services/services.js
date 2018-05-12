@@ -168,27 +168,31 @@ hotelExplorerApp.service('apifactory',['$http', function ($http) {
 
     // returns date appended with suffix like 'st', 'nd', 'rd', 'th'
     this.appendDateSuffix = function (date) {
-        if(date != 11) {
-            var modulo = date % 10;
+        if(!isNaN(date) date > 0 && date <= 31) {
+            if(date != 11) {
+                var modulo = date % 10;
+            }
+            var suffixed = '';
+            switch (modulo) {
+                case 1:
+                    suffixed = date+'st';
+                    break;
+                case 2:
+                    suffixed = date+'nd';
+                    break;
+                case 3:
+                    suffixed = date+'rd';
+                    break;
+                default:
+                    suffixed = date+'th'
+            }
+    
+            if(date == 11) {
+                suffixed = date+'th';
+            }
+            return suffixed;
+        } else {
+            alert('Date should be a number value between 1 and 31')
         }
-        var suffixed = '';
-        switch (modulo) {
-            case 1:
-                suffixed = date+'st';
-                break;
-            case 2:
-                suffixed = date+'nd';
-                break;
-            case 3:
-                suffixed = date+'rd';
-                break;
-            default:
-                suffixed = date+'th'
-        }
-
-        if(date == 11) {
-            suffixed = date+'th';
-        }
-        return suffixed;
     };
 }]);
