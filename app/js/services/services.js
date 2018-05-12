@@ -168,7 +168,7 @@ hotelExplorerApp.service('apifactory',['$http', function ($http) {
 
     // returns date appended with suffix like 'st', 'nd', 'rd', 'th'
     this.appendDateSuffix = function (date) {
-        if(!isNaN(date) date > 0 && date <= 31) {
+        if(!isNaN(date) && date > 0 && date <= 31) {
             if(date != 11) {
                 var modulo = date % 10;
             }
